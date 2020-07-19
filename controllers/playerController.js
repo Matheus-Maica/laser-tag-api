@@ -16,12 +16,16 @@ router.get('/', async (req, res) => {
 router.get('/leaderboard', async (req, res) => {
     const { skip, offset } = req.body;
     try {
-        var player = await Player
+        let playersCount;
+        var players = await Player
                         .find()
                         .sort('-kills')
                         .skip(skip)  
-                        .limit(offset)       
-        return res.send(player);
+                        .limit(offset)  
+        await Player.countDocuments({}, function (err, count) {
+            playersCount = count;
+        });
+        return res.send({players,playersCount});
     } catch(err) {
         return res.status(400).send({ error: "Erro ao buscar lista de jogadores" });
     }
