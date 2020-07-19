@@ -1,18 +1,19 @@
 const express = require("express");
 
-const Team = require('../models/teams')
+const Match = require('../models/match')
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    try {                
-        return res.send("TesteTeams");
+    try {
+        const matches = await Match.find();        
+        return res.send(matches);
     } catch(err) {
         return res.status(400).send({ error: "Erro ao pegar as atividades" });
     }
 })
 
-router.post('/cadastrar', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const {
             teamName
@@ -29,4 +30,4 @@ router.post('/cadastrar', async (req, res) => {
     }
 })
 
-module.exports = app => app.use("/teams", router);
+module.exports = app => app.use("/matches", router);
