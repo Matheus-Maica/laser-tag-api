@@ -14,14 +14,15 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/leaderboard', async (req, res) => {
-    const { skip, offset } = req.body;
+    const query = req.query;
+    const skip = 10 * (query.page * 1 - 1)
     try {
         let playersCount;
         var players = await Player
                         .find()
                         .sort('-kills')
                         .skip(skip)  
-                        .limit(offset)  
+                        .limit(10)  
         await Player.countDocuments({}, function (err, count) {
             playersCount = count;
         });

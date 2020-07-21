@@ -1,6 +1,9 @@
+require('dotenv/config')
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/lasertag', {
+// endedreço no atlas
+// process.env.URI_MONGODB
+mongoose.connect(process.env.URI_MONGODB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
