@@ -16,16 +16,17 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/death', async (req, res) => {
-    const query = req.query;
-    const id = parseInt(query.id)
+router.get('/death/:killed/:killer', async (req, res) => {
+    const query = req.params;
+    const id_killed = parseInt(query.killed)
+    const id_killer = parseInt(query.killer)
     const killed = {
-        player: id,
+        player: id_killed,
         team: id === 1 ? "blue" : "red"
     }
     const killer = {
-        player: id === 1 ? 2 : 1,
-        team: id === 1 ? "red" : "blue"
+        player: id_killer === 1 ? 2 : 1,
+        team: id_killer === 1 ? "red" : "blue"
     }
     try {
         socket.emit('death', {
