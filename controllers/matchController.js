@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/death', async (req, res) => {
-    const query = req.query;
+router.get('/death/:killed/:killer', async (req, res) => {
+    const query = req.params;
     const killed = query.killed;
     const killer = query.killer;
     try {

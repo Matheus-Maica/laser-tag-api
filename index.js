@@ -47,6 +47,8 @@ io.on('connection', socket => {
         //     },
         //     timeStamp,
         // }
+        console.log("Player morto: ")
+        console.log(deathInfo)
         io.sockets.emit('killfeed', deathInfo)
     })
 })
