@@ -42,17 +42,32 @@ router.get('/death', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const {
-            teamName
+            bluePlayer,
+            blueScore,
+            blueResult,
+            redPlayer,
+            redScore,
+            redResult,
+            time
         } = req.body        
 
-        console.log(teamName)
-        const team = Team.create({
-            teamName
+        const match = Match.create({
+            blueTeam: {
+                player: bluePlayer,
+                score: blueScore,
+                result: blueResult,
+            },
+            redTeam: {
+                player: redPlayer,
+                score: redScore,
+                result: redResult,
+            },
+            time,
         })
 
-        return res.send(team)
+        return res.send(match)
     } catch(err) {
-        return res.status(400).send({ error: "Erro ao cadastrar usuario" });
+        return res.status(400).send({ error: "Erro ao armazenar partida" });
     }
 })
 
