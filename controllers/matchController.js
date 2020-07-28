@@ -18,15 +18,22 @@ router.get('/', async (req, res) => {
 
 router.get('/death', async (req, res) => {
     const query = req.query;
-    const killed = query.killed;
-    const killer = query.killer;
+    const id = parseInt(query.id)
+    const killed = {
+        player: id,
+        team: id === 1 ? "blue" : "red"
+    }
+    const killer = {
+        player: id === 1 ? 2 : 1,
+        team: id === 1 ? "red" : "blue"
+    }
     try {
         socket.emit('death', {
             killed,
             killer,
             timeStamp: Date.now(),
         })
-        return res.send("Sucesso");
+        return res.send("Morto!");
     } catch(err) {
         return res.status(400).send({ error: "Erro ao emitir morte" });
     }

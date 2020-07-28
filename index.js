@@ -36,17 +36,7 @@ io.on('connection', socket => {
     })
 
     socket.on('death', deathInfo => {
-        // deathinfo = {
-        //     killed: {
-        //         name,
-        //         team
-        //     },
-        //     killer: {
-        //         name,
-        //         team
-        //     },
-        //     timeStamp,
-        // }
+        console.log(deathInfo)
         io.sockets.emit('killfeed', deathInfo)
     })
 })
