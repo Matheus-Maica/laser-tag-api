@@ -36,6 +36,7 @@ io.on('connection', socket => {
     })
 
     socket.on('death', deathInfo => {
+<<<<<<< HEAD
         // deathinfo = {
         //     killed: {
         //         name,
@@ -48,6 +49,8 @@ io.on('connection', socket => {
         //     timeStamp,
         // }
         console.log("Player morto: ")
+=======
+>>>>>>> 65a9859029765bdb829f22173624ef83003005e5
         console.log(deathInfo)
         io.sockets.emit('killfeed', deathInfo)
     })
