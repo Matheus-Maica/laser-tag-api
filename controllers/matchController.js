@@ -22,11 +22,11 @@ router.get('/death/:killed/:killer', async (req, res) => {
     const id_killer = parseInt(query.killer)
     const killed = {
         player: id_killed,
-        team: id_killed === 1 ? "blue" : "red"
+        team: id_killed === 1 ? "#519BFC" : "#FC5185"
     }
     const killer = {
         player: id_killer,
-        team: id_killer === 1 ? "blue" : "red"
+        team: id_killer === 1 ? "#519BFC" : "#FC5185"
     }
     try {
         socket.emit('death', {
