@@ -16,17 +16,17 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/death/:killed/:killer', async (req, res) => {
-    const query = req.params;
+router.get('/death', async (req, res) => {
+    const query = req.query;
     const id_killed = parseInt(query.killed)
     const id_killer = parseInt(query.killer)
     const killed = {
         player: id_killed,
-        team: id_killed === 1 ? "blue" : "red"
+        team: id_killed === 1 ? "#519BFC" : "#FC5185"
     }
     const killer = {
-        player: id_killer === 1 ? 2 : 1,
-        team: id_killer === 1 ? "red" : "blue"
+        player: id_killer,
+        team: id_killer === 1 ? "#519BFC" : "#FC5185"
     }
     try {
         socket.emit('death', {
@@ -43,17 +43,32 @@ router.get('/death/:killed/:killer', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const {
-            teamName
+            bluePlayer,
+            blueScore,
+            blueResult,
+            redPlayer,
+            redScore,
+            redResult,
+            time
         } = req.body        
 
-        console.log(teamName)
-        const team = Team.create({
-            teamName
+        const match = Match.create({
+            blueTeam: {
+                player: bluePlayer,
+                score: blueScore,
+                result: blueResult,
+            },
+            redTeam: {
+                player: redPlayer,
+                score: redScore,
+                result: redResult,
+            },
+            time,
         })
 
-        return res.send(team)
+        return res.send(match)
     } catch(err) {
-        return res.status(400).send({ error: "Erro ao cadastrar usuario" });
+        return res.status(400).send({ error: "Erro ao armazenar partida" });
     }
 })
 

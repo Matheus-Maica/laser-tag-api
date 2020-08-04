@@ -37,10 +37,17 @@ router.post('/', async (req, res) => {
         name,
         kills,
         deaths,
-        kd,
     } = req.body;
-    try {      
-        var player = Player.create({
+    try {  
+        existingPlayer = await Player.findOne({name})   
+        if(existingPlayer) {
+            await Player.findOneAndUpdate(existingPlayer, {
+                kills: existingPlayer.kills + kills,
+                deaths: existingPlayer.deaths + deaths,
+                kd: (existingPlayer.kills + kills) / (existingPlayer.deaths + deaths)
+            })
+        }
+        var player = await Player.create({
             name,
             kills,
             deaths,
