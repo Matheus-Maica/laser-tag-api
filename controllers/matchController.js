@@ -16,8 +16,9 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/death', async (req, res) => {
-    const query = req.query;
+router.get('/death/:killed/:killer', async (req, res) => {
+    const query = req.params;
+    console.log(query)
     const id_killed = parseInt(query.killed)
     const id_killer = parseInt(query.killer)
     const killed = {
