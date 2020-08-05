@@ -9,9 +9,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const matches = await Match.find();        
+        const matches = await Match.find();
         return res.send(matches);
-    } catch(err) {
+    } catch (err) {
         return res.status(400).send({ error: "Erro ao pegar as atividades" });
     }
 })
@@ -36,7 +36,7 @@ router.get('/death/:killed/:killer', async (req, res) => {
             timeStamp: Date.now(),
         })
         return res.send("Morto!");
-    } catch(err) {
+    } catch (err) {
         return res.status(400).send({ error: "Erro ao emitir morte" });
     }
 })
@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
             redScore,
             redResult,
             time
-        } = req.body        
+        } = req.body
 
         const match = Match.create({
             blueTeam: {
@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
         })
 
         return res.send(match)
-    } catch(err) {
+    } catch (err) {
         return res.status(400).send({ error: "Erro ao armazenar partida" });
     }
 })

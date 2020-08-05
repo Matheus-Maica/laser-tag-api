@@ -14,10 +14,6 @@ const PlayerSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    kd: {
-        type: Number,
-        default: 0,
-    },
 });
 const Player = mongoose.model("Player", PlayerSchema);
 module.exports = Player;

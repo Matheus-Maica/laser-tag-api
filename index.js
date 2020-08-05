@@ -9,10 +9,11 @@ app.use(morgan('tiny'));
 app.use(cors());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 require('./controllers/')(app);
 
 let port = 3030;
+
 
 var server = app.listen(port, () => {
     console.log('Servidor rodando na porta ' + port + '!!!');
@@ -21,6 +22,10 @@ var server = app.listen(port, () => {
 const io = require('socket.io')(server);
 
 io.on('connection', socket => {
+    app.get('/teste', (req, res) => {
+        io.sockets.emit('teste', { teste: 'teste' })
+        res.send("teste")
+    })
     console.log("New connection", socket.id)
     var onGoingMatch;
     socket.on('startMatch', matchInfo => {
