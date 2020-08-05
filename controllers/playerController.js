@@ -5,10 +5,10 @@ const Player = require('../models/player')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    try {      
-        var player = await Player.find();          
+    try {
+        var player = await Player.find();
         return res.send(player);
-    } catch(err) {
+    } catch (err) {
         return res.status(400).send({ error: "Erro ao buscar usuários" });
     }
 })
@@ -19,43 +19,42 @@ router.get('/leaderboard', async (req, res) => {
     try {
         let playersCount;
         var players = await Player
-                        .find()
-                        .sort('-kills')
-                        .skip(skip)  
-                        .limit(10)  
+            .find()
+            .sort('-kills')
+            .skip(skip)
+            .limit(10)
         await Player.countDocuments({}, function (err, count) {
             playersCount = count;
         });
-        return res.send({players,playersCount});
-    } catch(err) {
+        return res.send({ players, playersCount });
+    } catch (err) {
         return res.status(400).send({ error: "Erro ao buscar lista de jogadores" });
     }
 })
 
 router.post('/', async (req, res) => {
-    const { 
+    const {
         name,
         kills,
         deaths,
     } = req.body;
-    try {  
-        existingPlayer = await Player.findOne({name})   
-        if(existingPlayer) {
-            await Player.findOneAndUpdate(existingPlayer, {
-                kills: existingPlayer.kills + kills,
-                deaths: existingPlayer.deaths + deaths,
-                kd: (existingPlayer.kills + kills) / (existingPlayer.deaths + deaths)
-            })
+    try {
+        const existingPlayer = await Player.findOne({ name })
+        if (existingPlayer) {
+            existingPlayer.kills += kills
+            existingPlayer.deaths += deaths
+            await existingPlayer.save();
+            return res.json({ message: "jogador atualizado" })
         }
-        var player = await Player.create({
+        var player = Player.create({
             name,
             kills,
-            deaths,
-            kd,
-        });          
-        return res.send(player);
-    } catch(err) {
-        return res.status(400).send({ error: "Erro ao criar usuário" });
+            deaths
+        });
+
+        return res.json({ player });
+    } catch (err) {
+        return res.status(400).json({ error: "Erro ao criar usuário" });
     }
 })
 
