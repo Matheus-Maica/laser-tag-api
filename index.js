@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
+require('dotenv').config()
 
 const app = express();
 
@@ -12,11 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 require('./controllers/')(app);
 
-let port = 3030;
 
-
-var server = app.listen(port, () => {
-    console.log('Servidor rodando na porta ' + port + '!!!');
+var server = app.listen(process.env.PORT, () => {
+    console.log('Servidor rodando na porta ' + process.env.PORT + '!!!');
 });
 
 const io = require('socket.io')(server);
