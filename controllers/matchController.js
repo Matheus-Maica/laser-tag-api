@@ -1,7 +1,7 @@
 const express = require("express");
 
 const socketIOClient = require('socket.io-client');
-const socket = socketIOClient("http://localhost:3030/");
+const socket = socketIOClient("https://laser-tag-api.herokuapp.com/");
 
 const Match = require('../models/match')
 
