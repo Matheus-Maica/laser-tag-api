@@ -1,7 +1,7 @@
 const express = require("express");
 
 const socketIOClient = require('socket.io-client');
-const socket = socketIOClient("https://laser-tag-api.herokuapp.com/");
+const socket = socketIOClient("http://localhost:3030/");
 
 const Match = require('../models/match')
 
@@ -23,11 +23,11 @@ router.get('/death/:killed/:killer', async (req, res) => {
     const id_killer = parseInt(query.killer)
     const killed = {
         player: id_killed,
-        team: id_killed === 1 ? "#519BFC" : "#FC5185"
+        team: id_killed === 247 ? "#519BFC" : "#FC5185"
     }
     const killer = {
         player: id_killer,
-        team: id_killer === 1 ? "#519BFC" : "#FC5185"
+        team: id_killer === 247 ? "#519BFC" : "#FC5185"
     }
     try {
         socket.emit('death', {
